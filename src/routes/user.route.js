@@ -8,6 +8,9 @@ router.post("/registration", UserController.register);
 router.post("/login", UserController.login);
 router.get("/", authenticate, UserController.getAll);
 router.get("/:id", authenticate, UserController.getUserById);
+router.get("/:id/streams", authenticate, UserController.getAllStreamByUserId);
+router.get("/:uid/streams/:sid", authenticate, UserController.getStreamByUserId);
+router.delete("/:uid/streams/:sid", authenticate, UserController.removeUserFromStream);
 router.patch("/:id", authenticate, UserController.updateUser);
 router.delete("/:id", authenticate, UserController.deleteUser);
 

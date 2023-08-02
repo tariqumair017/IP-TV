@@ -5,7 +5,6 @@ const schema = mongoose.Schema(
 		lastName: { type: String, required: true, maxlength: 50 },
 		email: { type: String, unique: true, required: true },
 		password: { type: String, required: true },
-		streams: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Stream' },
 	},
 	{ timestamps: true }
 );

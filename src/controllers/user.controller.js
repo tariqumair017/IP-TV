@@ -70,6 +70,45 @@ export const UserController = {
 		}
 	},
 
+	getAllStreamByUserId: async (req, res) => {
+		try {
+			const stream = await UserService.getAllStreamByUserId(req.params.id);
+			if(stream.length <= 0) {
+				return httpResponse.NOT_FOUND(res, null, "stream not found");
+			}
+			
+			return httpResponse.SUCCESS(res, stream);
+		} catch (error) {
+			return httpResponse.INTERNAL_SERVER_ERROR(res, error);
+		}
+	},
+
+	getStreamByUserId: async (req, res) => {
+		try {
+			const stream = await UserService.getStreamByUserId(req.params.uid, req.params.sid);
+			if(!stream) {
+				return httpResponse.NOT_FOUND(res, null, "stream not found");
+			}
+			
+			return httpResponse.SUCCESS(res, stream);
+		} catch (error) {
+			return httpResponse.INTERNAL_SERVER_ERROR(res, error);
+		}
+	},
+
+	removeUserFromStream: async (req, res) => {
+		try {
+			const stream = await UserService.removeUserFromStream(req.params.uid, req.params.sid);
+			if(!stream) {
+				return httpResponse.NOT_FOUND(res, null, "stream not found");
+			}
+			
+			return httpResponse.SUCCESS(res, stream);
+		} catch (error) {
+			return httpResponse.INTERNAL_SERVER_ERROR(res, error);
+		}
+	},
+
 	updateUser: async (req, res) => {
 		try { 
 			req.body.password = undefined; 
