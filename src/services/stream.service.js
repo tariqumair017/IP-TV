@@ -1,4 +1,5 @@
 import { StreamModel } from "../models/index.js"; 
+import mongoose from "mongoose";
 
 export const StreamService = { 
 	addStream: async (body) => {  
@@ -14,8 +15,20 @@ export const StreamService = {
 		return StreamModel.find();
 	},
 
-	streamById: async (id) => {
-		return StreamModel.findById(id);
+	streamById: async (id) => { 
+		const data = await StreamModel.aggregate([
+			{ $match: { _id: new mongoose.Types.ObjectId(id) } },
+			{
+			  $lookup: {
+				from: "users",
+				localField: "users",
+				foreignField: "_id",
+				as: "streamUsers",
+			  },
+			}
+		]); 
+
+		return data;
 	},
 };
  
